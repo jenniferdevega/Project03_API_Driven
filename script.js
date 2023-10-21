@@ -1,13 +1,26 @@
 //--===================== Start of Declaration =====================--
 
+//Note: DO NOT USE d-flex in section since section.style.display = 'none'; will not work
+const elementSection = document.querySelector("#sectionHourlyForecast");
+const elementMain = document.querySelector("#main");
+let inputLocation = document.querySelector("#inputLocation");
 
+let longitude;
+let latitude;
+let APIKey = `019c41c0dadb7a3038572dae8296fdcf`;
+let APICurrentWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKey}`;
 //--===================== End of Declaration =====================--
 
 //--===================== Start of Execution=====================--
-//First execution
-window.addEventListener('load', () => {
-    header();
+  window.addEventListener('load', () => {
+  //Defaults
+    //Hide element Hourly Section Forecast
+    elementSection.style.display = 'none';
+    elementHeader();
+
+    enabledUserLocation();
   });
+
 
 //Event Listeners
 btnSearchLocation.addEventListener('click', () => {
@@ -23,7 +36,7 @@ inputLocation.addEventListener('keypress',(e)=> {
 //--===================== End of Execution =====================--
 
 //--===================== Start of Functions =====================--
-function header() {
+function elementHeader() {
     const header = document.querySelector("#header");
     header.innerHTML += 
     `
@@ -44,7 +57,41 @@ function validateInputLocation(){
       allowOutsideClick: false
     });
   }else{
-    alert("hello");
+    //Unhide element Hourly Section Forecast
+    elementSection.style.display = "block";
   }
 }
+
+//Verify Device Enabled Location
+function enabledUserLocation(){
+  //Retrieve current location
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(coordinates=>{
+
+    //For Testing purposes
+    console.log(coordinates);
+    
+      longitude = coordinates.longitude;
+      latitude = coordinates.latitude;
+    
+      //Unhide element Hourly Section Forecast
+      elementSection.style.display = "block";
+    fetchWeatherAPIs(APICurrentWeather);
+    })
+  }
+}
+
+//List of APIs
+function fetchWeatherAPIs(APICurrentWeather){
+  fetch(APICurrentWeather)
+  .then(response => response.json())
+  .then(data => {
+
+    //For Testing purposes
+    console.log(data);
+  })
+  .catch(error => console.log(error));
+};
+
+
 //--===================== End of Functions =====================--
