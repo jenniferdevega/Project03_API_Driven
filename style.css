@@ -1,0 +1,23 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Croissant+One&family=Poppins:wght@300;400&display=swap');
+
+/* --===================== Start: Element Customization =====================--  */
+
+/* All element */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+
+/* Individual Element */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f7f7;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* --===================== End: Element Customization =====================--  */
