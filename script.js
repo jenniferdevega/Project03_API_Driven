@@ -8,7 +8,7 @@ let inputLocation = document.querySelector("#inputLocation");
 let longitude;
 let latitude;
 let APIKey = `019c41c0dadb7a3038572dae8296fdcf`;
-let APICurrentWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKey}`;
+
 //--===================== End of Declaration =====================--
 
 //--===================== Start of Execution=====================--
@@ -71,9 +71,11 @@ function enabledUserLocation(){
     //For Testing purposes
     console.log(coordinates);
     
-      longitude = coordinates.longitude;
-      latitude = coordinates.latitude;
-    
+      longitude = coordinates.coords.longitude;
+      latitude = coordinates.coords.latitude;
+
+      var APICurrentWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKey}`;
+
       //Unhide element Hourly Section Forecast
       elementSection.style.display = "block";
     fetchWeatherAPIs(APICurrentWeather);
@@ -89,9 +91,13 @@ function fetchWeatherAPIs(APICurrentWeather){
 
     //For Testing purposes
     console.log(data);
+
+    currentWeather(data);
   })
   .catch(error => console.log(error));
 };
 
+function currentWeather(data){
 
+};
 //--===================== End of Functions =====================--
