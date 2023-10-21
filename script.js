@@ -5,6 +5,8 @@ const elementSection = document.querySelector("#sectionHourlyForecast");
 const elementMain = document.querySelector("#main");
 let inputLocation = document.querySelector("#inputLocation");
 
+const isBoolean = false;
+
 let longitude;
 let latitude;
 let APIKey = `019c41c0dadb7a3038572dae8296fdcf`;
@@ -15,13 +17,13 @@ let APIKey = `019c41c0dadb7a3038572dae8296fdcf`;
   window.addEventListener('load', () => {
   //Defaults
     //Hide element Hourly Section Forecast
-    elementSection.style.display = 'none';
+    hideSection(true);
 
     //Focus input
     inputLocation.focus();
-    elementHeader();
+    displayHeader();
 
-    enabledUserLocation();
+    getUserLocation();
   });
 
 
@@ -36,10 +38,10 @@ inputLocation.addEventListener('keypress',(e)=> {
   }
 });
 
-//--===================== End of Execution =====================--
+// //--===================== End of Execution =====================--
 
 //--===================== Start of Functions =====================--
-function elementHeader() {
+function displayHeader() {
     const header = document.querySelector("#header");
     header.innerHTML += 
     `
@@ -49,10 +51,15 @@ function elementHeader() {
     `;
   }
 
+function hideSection(isBoolean){
+
+  isBoolean == true ? elementSection.style.display = 'none': elementSection.style.display = "block";;
+}
+
 //Validation
 function validateInputLocation(){
   const inputLocation = document.querySelector("#inputLocation").value.toUpperCase();
-  if(inputLocation =="" || !inputLocation.match(/\w/)){
+  if(inputLocation =="" || !inputLocation.match(/\w/)){ 
     Swal.fire({
       title: 'Location Not Found',
       icon: 'error',
@@ -61,15 +68,15 @@ function validateInputLocation(){
     });
   }else{
     //Unhide element Hourly Section Forecast
-    elementSection.style.display = "block";
+    hideSection(false);
   }
 }
 
 //Verify Device Enabled Location
-function enabledUserLocation(){
+function getUserLocation(){
   //Retrieve current location
   if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(coordinates=>{
+    navigator.geolocation.getCurrentPosition(coordinates => {
 
     //For Testing purposes
     console.log(coordinates);
@@ -81,7 +88,7 @@ function enabledUserLocation(){
 
       //Unhide element Hourly Section Forecast
       elementSection.style.display = "block";
-    fetchWeatherAPIs(APICurrentWeather);
+    // fetchWeatherAPIs(APICurrentWeather);
     })
   }
 }
