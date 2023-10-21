@@ -19,20 +19,64 @@
 
     <!-- External CSS -->
     <link rel="stylesheet" href="style.css" />
+
+    <!-- Sweet Alert 2 -->
+    <link rel="stylesheet" href="sweetalert2.min.css" />
     <!-- End of References -->
   </head>
-  <body class="d-flex flex-column min-vh-100">
+  <body
+    class="d-flex flex-column min-vh-100 position-relative justify-content-center p-5 pb-5 align-items-center"
+    id="body"
+  >
     <!-- Start of Header -->
-    <head></head>
-    <!-- End of HeaEnd-> 
+    <header class="containern card shadow" id="header"></header>
+    <!-- End of Header-> 
 
-    <! -- Start of Main -->
-    <main></main>
-    <!-- End of Main -->
+    <! -- Start of Realtime Weather and Location Search -->
+    <main
+      class="container row d-flex justify-content-center text-white mt-4 mb-4"
+      id="main"
+    >
+      <div
+        class="card shadow px-5 py-3 text-center d-flex justify-content-center"
+        id="divSearch"
+      >
+        <input
+          type="text"
+          name="location"
+          id="inputLocation"
+          class="form-control text-center"
+          placeholder="Type location here..."
+          maxlength="30"
+          required
+        />
+        <button
+          id="btnSearchLocation"
+          class="btn btn-info mt-4 mb-3 text-white fw-bolder"
+          type="submit"
+        >
+          ➡️ Search
+        </button>
+      </div>
+    </main>
+    <!-- End of Realtime Weather and Location Search -->
+
+    <!-- Start of Hourly Forecast -->
+    <section
+      id="sectionHourlyForecast"
+      class="d-flex justify-content-center text-white mt-4 mb-4"
+    >
+      <div
+        class="hourlyForecast position-relative"
+        id="divHourlyForecast"
+        mt-4
+      ></div>
+    </section>
+    <!-- End of Hourly Forecast -->
 
     <!-- Start of Footer -->
     <footer
-      class="container-fluid p-1 mt-5 text-center f-5 fw-bold fw-bolder mt-auto"
+      class="container-fluid p-1 mt-3 text-center f-5 fw-bold fw-bolder mt-auto"
     >
       Copyright 2023 © De Vega, Jennifer. All rights Reserved.
     </footer>
@@ -48,6 +92,9 @@
 
     <!-- External javascript -->
     <script src="script.js"></script>
+
+    <!-- Sweet Alert v2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- End of References -->
   </body>
 </html>
