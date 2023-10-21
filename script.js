@@ -7,12 +7,19 @@
 //First execution
 window.addEventListener('load', () => {
     header();
-  })
+  });
 
 //Event Listeners
 btnSearchLocation.addEventListener('click', () => {
   validateInputLocation();
-})
+});
+
+inputLocation.addEventListener('keypress',(e)=> {
+  if(e.key === "Enter"){
+    validateInputLocation();(e);
+  }
+});
+
 //--===================== End of Execution =====================--
 
 //--===================== Start of Functions =====================--
@@ -40,4 +47,4 @@ function validateInputLocation(){
     alert("hello");
   }
 }
-//--===================== Start of End =====================--
+//--===================== End of Functions =====================--
