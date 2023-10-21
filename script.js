@@ -16,6 +16,9 @@ let APIKey = `019c41c0dadb7a3038572dae8296fdcf`;
   //Defaults
     //Hide element Hourly Section Forecast
     elementSection.style.display = 'none';
+
+    //Focus input
+    inputLocation.focus();
     elementHeader();
 
     enabledUserLocation();
