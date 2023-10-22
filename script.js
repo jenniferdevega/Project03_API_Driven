@@ -1,16 +1,14 @@
 //--===================== Start of Declaration =====================--
 
 //Note: DO NOT USE d-flex in section since section.style.display = 'none'; will not work
-const elementSection = document.querySelector("#sectionHourlyForecast");
-const elementMain = document.querySelector("#main");
-let inputLocation = document.querySelector("#inputLocation");
-
-const isBoolean = false;
+const ELEMENT_SECTION = document.querySelector("#sectionHourlyForecast");
+const ELEMENT_MAIN = document.querySelector("#main");
+const API_KEY = "cdcaf7b8f51846e3af9234924232110";
 
 let longitude;
 let latitude;
-let APIKey = `019c41c0dadb7a3038572dae8296fdcf`;
-
+let inputLocation = document.querySelector("#inputLocation");
+let isBoolean = false;
 //--===================== End of Declaration =====================--
 
 //--===================== Start of Execution=====================--
@@ -53,7 +51,7 @@ function displayHeader() {
 
 function hideSection(isBoolean){
 
-  isBoolean == true ? elementSection.style.display = 'none': elementSection.style.display = "block";;
+  isBoolean == true ? ELEMENT_SECTION.style.display = 'none': ELEMENT_SECTION.style.display = "block";;
 }
 
 //Validation
@@ -84,11 +82,11 @@ function getUserLocation(){
       longitude = coordinates.coords.longitude;
       latitude = coordinates.coords.latitude;
 
-      var APICurrentWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKey}`;
+      var APICurrentWeather = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latitude},${longitude}`;
 
       //Unhide element Hourly Section Forecast
-      elementSection.style.display = "block";
-    // fetchWeatherAPIs(APICurrentWeather);
+      ELEMENT_SECTION.style.display = "block";
+      fetchWeatherAPIs(APICurrentWeather);
     })
   }
 }
