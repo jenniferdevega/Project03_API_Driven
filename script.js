@@ -184,7 +184,7 @@ function formatCurrentWeather(data){
               </div>
             </div>
 
-            <div class="col-2 pt-2 pb-2 divLeft">
+            <div class="col-2 pt-2 pb-2 divLeft shadow">
               Precipitation: <strong>${data.current.precip_in}%</strong>
                 <br>
               Humidity: <strong>${data.current.humidity}%</strong>
