@@ -1,7 +1,7 @@
 //--===================== Start of Declaration =====================--
 
 //Note: DO NOT USE d-flex in section since section.style.display = 'none'; will not work
-const ELEMENT_SECTION = document.querySelector("#sectionHourlyForecast");
+const SECTION_HOURLY = document.querySelector("#divHourlyForecast");
 const ELEMENT_MAIN = document.querySelector("#main");
 const API_KEY = "cdcaf7b8f51846e3af9234924232110";
 
@@ -13,12 +13,14 @@ let isBoolean = false;
 
 //--===================== Start of Execution=====================--
   window.addEventListener('load', () => {
+    
   //Defaults
     //Hide element Hourly Section Forecast
     hideSection(true);
 
     //Focus input
     inputLocation.focus();
+
     displayHeader();
 
     getUserLocation();
@@ -36,12 +38,12 @@ inputLocation.addEventListener('keypress',(e)=> {
   }
 });
 
-// //--===================== End of Execution =====================--
+//--===================== End of Execution =====================--
 
 //--===================== Start of Functions =====================--
 function displayHeader() {
     const header = document.querySelector("#header");
-    header.innerHTML += 
+    header.innerHTML +=
     `
       <h1 class="text-center p-3">
         Weather Forecast
@@ -51,7 +53,7 @@ function displayHeader() {
 
 function hideSection(isBoolean){
 
-  isBoolean == true ? ELEMENT_SECTION.style.display = 'none': ELEMENT_SECTION.style.display = "block";;
+  isBoolean == true ? SECTION_HOURLY.style.display = 'none': SECTION_HOURLY.style.display = "block";;
 }
 
 //Validation
@@ -85,13 +87,17 @@ function getUserLocation(){
       var APICurrentWeather = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitude},${longitude}`;
 
       //Unhide element Hourly Section Forecast
-      ELEMENT_SECTION.style.display = "block";
+      hideSection(false);
+
       fetchWeatherAPIs(APICurrentWeather);
     })
   }
 }
 
 function convertStringToDateTime(strDateTime){
+
+  console.log(strDateTime);
+
   const DATE_TIME = new Date(strDateTime);
   var strDay;
 
@@ -158,14 +164,14 @@ function formatCurrentWeather(data){
   var dateTimeDetails = convertStringToDateTime(data.location.localtime);
 
    var child = `
-        <div class="card-body">
-          <div class="w-100 mt-5 row">
+        <div class="card-body d-flex">
+          <div class="w-100 mt-5 row d-flex">
 
             <div class="col-2 pt-2 pb-2 divRight">
                <img class="weatherIcon" src="${data.current.condition.icon}" alt="weather icon">
             </div>
 
-            <div class="col-2 pt-2 pb-2 text-center fs-5">
+            <div class="col-2 pt-2 text-center fs-5">
               <h1 class="fw-bold">
                 ${data.location.name}
               </h1>
@@ -174,7 +180,7 @@ function formatCurrentWeather(data){
               </span>
             </div>
             
-            <div class="col-2 pt-2 pb-2">
+            <div class="col-2 pt-2">
               <div class="badge bg-primary fs-3">
               ${data.current.temp_c} °C
               </div>
@@ -184,7 +190,7 @@ function formatCurrentWeather(data){
               </div>
             </div>
 
-            <div class="col-2 pt-2 pb-2 divLeft shadow">
+            <div class="col-2 pt-2 divLeft shadow">
               Precipitation: <strong>${data.current.precip_in}%</strong>
                 <br>
               Humidity: <strong>${data.current.humidity}%</strong>
@@ -192,7 +198,7 @@ function formatCurrentWeather(data){
               Wind: <strong>${data.current.wind_kph} km/h </strong>
             </div>
 
-            <div class="col-4 pt-2 pb-2 text-center fs-5">
+            <div class="col-4 pt-2 text-center fs-5">
               <span>
                 As of <strong>${dateTimeDetails[0]}, ${dateTimeDetails[2]}</strong>
                 </br>
@@ -231,12 +237,43 @@ function formatCurrentWeather(data){
           <div class="col-4 pt-2 pb-2">
           </div>
 
-
-
         </div>
       </div>
       `
   // Append to parent
   ELEMENT_MAIN.innerHTML += child;
+
+  getHourlyWeather(data);
 };
+
+function getHourlyWeather(data) {
+    for (i = 0; i < 24; i++) {
+      var dateTimeDetails = convertStringToDateTime(data.forecast.forecastday[0].hour[i].time);
+      SECTION_HOURLY.innerHTML +=
+      `
+        <div class="card-body d-flex">
+            <div class="w-100 d-flex">
+
+              <div class="divRight d-flex cardSize">
+                <div 
+                   class="shadow-lg bg-body rounded-3 d-flex flex-column justify-content-center align-items-center mt-2 p-3 fs-3 cardSize">
+                  <span>${dateTimeDetails[2]}</span>
+                  <img 
+                    class="mt-3" 
+                    src="${data.forecast.forecastday[0].hour[i].condition.icon}" alt="weather icon"
+                  >
+                  <span class="text-center w-100 p-1 mt-3 badge bg-info fs-6 fw-bold">
+                    ${data.forecast.forecastday[0].hour[i].condition.text}
+                  </span>
+                  <span class="text-center w-100 mt-3 fs-3">
+                    ${data.forecast.forecastday[0].hour[i].temp_c}℃
+                  </span>
+                </div>
+              </div>
+
+            </div>
+        </div>
+      `
+    }
+}
 //--===================== End of Functions =====================--
