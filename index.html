@@ -30,7 +30,7 @@
     id="body"
   >
     <!-- Start of Header -->
-    <header class="containern card shadow" id="header"></header>
+    <header class="containern" id="header"></header>
     <!-- End of Header-> 
  
     <! -- Start of Realtime Weather and Location Search -->
@@ -39,25 +39,33 @@
       id="main"
     >
       <div
-        class="card px-5 py-3 text-center d-flex justify-content-center"
+        class="card shadow px-5 py-1 text-center d-flex justify-content-center w-50 mb-5"
         id="divSearch"
       >
-        <input
-          type="text"
-          name="location"
-          id="inputLocation"
-          class="form-control text-center"
-          placeholder="Type location here..."
-          maxlength="30"
-          required
-        />
-        <button
-          id="btnSearchLocation"
-          class="btn btn-info mt-4 mb-3 text-white fw-bolder"
-          type="submit"
-        >
-          ➡️ Search
-        </button>
+        <div class="card-body">
+          <div class="container">
+            <div class="container justify-content-center d-flex">
+              <input
+                type="text"
+                name="location"
+                id="inputLocation"
+                class="form-control text-center ps-5 pe-5"
+                placeholder="Type location here..."
+                maxlength="30"
+                required
+              />
+            </div>
+            <div class="container justify-content-center d-flex">
+              <button
+                id="btnSearchLocation"
+                class="btn btn-info mt-4 mb-2 text-white fw-bolder ps-5 pe-5"
+                type="submit"
+              >
+                ➡️Search
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
     <!-- End of Realtime Weather and Location Search -->
