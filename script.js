@@ -82,13 +82,62 @@ function getUserLocation(){
       longitude = coordinates.coords.longitude;
       latitude = coordinates.coords.latitude;
 
-      var APICurrentWeather = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latitude},${longitude}`;
+      var APICurrentWeather = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitude},${longitude}`;
 
       //Unhide element Hourly Section Forecast
       ELEMENT_SECTION.style.display = "block";
       fetchWeatherAPIs(APICurrentWeather);
     })
   }
+}
+
+function convertStringToDateTime(strDateTime){
+  const dateTime = new Date(strDateTime);
+  var strDay;
+
+  console.log(dateTime);
+
+  //Get Day of the Week
+  switch (dateTime.getDay()) {
+    case 0:
+      strDay = "Sunday";
+      break;
+    case 1:
+      strDay = "Monday";
+      break;
+    case 2:
+      strDay = "Tuesday";
+      break;
+    case 3:
+      strDay = "Wednesday";
+      break;
+    case 4:
+      strDay = "Thursday";
+      break;
+    case 5:
+      strDay = "Friday";
+      break;
+    case 6:
+      strDay = "Saturday";
+  }
+
+  //Get 12 hour format
+  var hours = dateTime.getHours();
+  var minutes = dateTime.getMinutes();
+  var AMPM = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + AMPM;
+
+  //Return DateTime in array format
+  var arrayDateTimeDetails = new Array(3);
+  arrayDateTimeDetails[0] = strDay;
+  arrayDateTimeDetails[1] = dateTime.toDateString().slice(3,16);
+  arrayDateTimeDetails[2] = strTime;
+
+  console.log(arrayDateTimeDetails);
+  return arrayDateTimeDetails;
 }
 
 //List of APIs
@@ -100,12 +149,116 @@ function fetchWeatherAPIs(APICurrentWeather){
     //For Testing purposes
     console.log(data);
 
-    currentWeather(data);
+    formatCurrentWeather(data);
   })
   .catch(error => console.log(error));
 };
 
-function currentWeather(data){
+function formatCurrentWeather(data){
+  var dateTimeDetails = convertStringToDateTime(data.location.localtime);
+
+   var right = `
+        <div class="card-body">
+          <div class="w-100 mt-5 row">
+
+            <div class="col-2 pt-2 pb-2 divRight">
+               <img class="position-absolute weatherIcon" src="${data.current.condition.icon}" alt="weather icon">
+            </div>
+
+            <div class="col-2 pt-2 pb-2 text-center fs-5">
+              <h1 class="fw-bold">
+                ${data.location.name}
+              </h1>
+              <span>
+                ${data.location.region}, ${data.location.country}
+              </span>
+            </div>
+            
+            <div class="col-2 pt-2 pb-2">
+              <div class="badge bg-primary fs-3">
+              ${data.current.temp_c} °C
+              </div>
+
+              <div class="badge bg-info fs-4 mt-3">
+              ${data.current.temp_f} °F
+              </div>
+            </div>
+
+            <div class="col-2 pt-2 pb-2 divLeft">
+              Precipitation: <strong>${data.current.precip_in}%</strong>
+                <br>
+              Humidity: <strong>${data.current.humidity}%</strong>
+                </br>
+              Wind: <strong>${data.current.wind_kph} km/h </strong>
+            </div>
+
+            <div class="col-4 pt-2 pb-2 text-center fs-5">
+              <span>
+                As of <strong>${dateTimeDetails[0]}, ${dateTimeDetails[2]}</strong>
+                </br>
+                ${dateTimeDetails[1]}
+                </br>
+              </span>
+
+              <span class="badge bg-warning">
+                ${data.current.condition.text}
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="card shadow mt-5 w-100">
+          <div class="card-body">
+          <div class="row">
+
+            <div class="col-2 pt-2 pb-2 text-center">
+            </div>
+
+            <div class="col-2 pt-2 pb-2 text-center">
+ 
+            </div>
+
+            <div class="col-2 pt-2 pb-2=">
+
+            </div>
+
+            <div class="col-2 pt-2 pb-2 text-center">
+            </div>
+
+            <div class="col-2 pt-2 pb-2 text-center">
+            
+            </div>
+
+            <div class="col-2 pt-2 pb-2 text-center">
+            </div>
+          
+          </div>
+        </div>
+        </div>
+      `
+  var left =  `
+    <div class="col-sm-6 mt-4">
+      <div class="col-4 mt-3 w-100">
+        <div class="text-center rounded-pill d-flex justify-content-center p-2">
+          <span class="time fst-italic m-0 ps-2">
+            Sunrise ${data.forecast.forecastday[0].astro.sunrise}
+          </span>
+        </div>
+        <div class="text-center rounded-pill d-flex justify-content-center p-2 mt-3">
+          <span class="time fst-italic ps-2  m-0">
+            Sunset ${data.forecast.forecastday[0].astro.sunset}
+          </span>
+        </div>
+      </div>
+    </div>
+  `
+
+ 
+  // append children to parent main
+  ELEMENT_MAIN.innerHTML += right;
+  ELEMENT_MAIN.innerHTML += left;
 
 };
 //--===================== End of Functions =====================--
