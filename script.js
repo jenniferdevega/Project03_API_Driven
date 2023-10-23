@@ -34,7 +34,7 @@ let isBoolean = false;
 function displayHeader() {
     HEADER.innerHTML +=
     `
-      <h1 class="text-center p-3">
+      <h1 class="text-center p-3 badge bg-primary fs-1">
         Weather Forecast
       </h1>
     `;
