@@ -81,8 +81,8 @@ function getUserLocation(){
       hideSection(false);
 
       fetchWeatherAPIs(APICurrentWeather);
-    })
-  }
+    });
+  };
 }
 
 function convertStringToDateTime(strDateTime){
@@ -248,11 +248,11 @@ function getHourlyWeather(data) {
             <div class="w-100 d-flex">
 
               <div class="divRight d-flex cardSize">
-                <div 
+                <div
                    class="shadow-lg bg-body rounded-3 d-flex flex-column justify-content-center align-items-center mt-2 p-3 fs-3 cardSize">
                   <span>${dateTimeDetails[2]}</span>
-                  <img 
-                    class="mt-3" 
+                  <img
+                    class="mt-3"
                     src="${data.forecast.forecastday[0].hour[i].condition.icon}" alt="weather icon"
                   >
                   <span class="text-center w-100 p-1 mt-3 badge bg-info fs-6 fw-bold">
@@ -282,7 +282,6 @@ function searchLocation(api, data){
       api = `https://api.weatherapi.com/v1/forecast.json?key=3f5f1e7f0c3f4ee4baa135432230210&q=${INPUT_LOCATION.value}`;
       fetchWeatherAPIs(api, data);
     }
-
   });
 
   INPUT_LOCATION.addEventListener('keypress',(e)=> {
