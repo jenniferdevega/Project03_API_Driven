@@ -25,12 +25,17 @@
     font-family: 'Poppins', sans-serif;
   }
 
+  .btn-info:hover{
+    background-color: blue;
+    border-color: transparent;
+  }
+
   /* Classes */
   .weatherIcon{
     height: 300px;
     width: 300px;
     left: 22%;
-    top: 25%;
+    top: 27%;
     position: absolute;
     z-index: -1;
   }

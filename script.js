@@ -1,8 +1,13 @@
 //--===================== Start of Declaration =====================--
 
 //Note: DO NOT USE d-flex in section since section.style.display = 'none'; will not work
-const SECTION_HOURLY = document.querySelector("#divHourlyForecast");
-const ELEMENT_MAIN = document.querySelector("#main");
+const SECTION_HOURLY = document.querySelector("#sectionHourly");
+const DIV_HOURLY = document.querySelector("#divHourlyForecast");
+let ELEMENT_MAIN = document.querySelector("#main");
+let INPUT_LOCATION = document.querySelector("#inputLocation");
+let BTN_SEARCH_LOCATION = document.querySelector("#btnSearchLocation");
+let HEADER = document.querySelector("#header");
+
 const API_KEY = "cdcaf7b8f51846e3af9234924232110";
 
 let longitude;
@@ -12,38 +17,22 @@ let isBoolean = false;
 //--===================== End of Declaration =====================--
 
 //--===================== Start of Execution=====================--
+
   window.addEventListener('load', () => {
-    
   //Defaults
+    //Focus input
+    INPUT_LOCATION.focus();
+
     //Hide element Hourly Section Forecast
     hideSection(true);
-
-    //Focus input
-    inputLocation.focus();
-
     displayHeader();
-
     getUserLocation();
   });
-
-
-//Event Listeners
-btnSearchLocation.addEventListener('click', () => {
-  validateInputLocation();
-});
-
-inputLocation.addEventListener('keypress',(e)=> {
-  if(e.key === "Enter"){
-    validateInputLocation();(e);
-  }
-});
-
 //--===================== End of Execution =====================--
 
 //--===================== Start of Functions =====================--
 function displayHeader() {
-    const header = document.querySelector("#header");
-    header.innerHTML +=
+    HEADER.innerHTML +=
     `
       <h1 class="text-center p-3">
         Weather Forecast
@@ -52,13 +41,14 @@ function displayHeader() {
   }
 
 function hideSection(isBoolean){
-
   isBoolean == true ? SECTION_HOURLY.style.display = 'none': SECTION_HOURLY.style.display = "block";;
 }
 
 //Validation
-function validateInputLocation(){
+function isValidInputLocation(){
   const inputLocation = document.querySelector("#inputLocation").value.toUpperCase();
+  var isValid = false;
+
   if(inputLocation =="" || !inputLocation.match(/\w/)){ 
     Swal.fire({
       title: 'Location Not Found',
@@ -69,7 +59,9 @@ function validateInputLocation(){
   }else{
     //Unhide element Hourly Section Forecast
     hideSection(false);
+    isValid = true;
   }
+  return isValid;
 }
 
 //Verify Device Enabled Location
@@ -156,6 +148,7 @@ function fetchWeatherAPIs(APICurrentWeather){
     console.log(data);
 
     formatCurrentWeather(data);
+    searchLocation(APICurrentWeather, data);
   })
   .catch(error => console.log(error));
 };
@@ -198,15 +191,16 @@ function formatCurrentWeather(data){
               Wind: <strong>${data.current.wind_kph} km/h </strong>
             </div>
 
-            <div class="col-4 pt-2 text-center fs-5">
+            <div class="col-4 pt-2 text-center">
               <span>
-                As of <strong>${dateTimeDetails[0]}, ${dateTimeDetails[2]}</strong>
+                As of <strong class=" fs-5">${dateTimeDetails[0]},</strong>
+                <span class="fs-4">${dateTimeDetails[2]}</span>
                 </br>
-                ${dateTimeDetails[1]}
+                <span class="fs-5">${dateTimeDetails[1]}</span>
                 </br>
               </span>
 
-              <span class="badge bg-info">
+              <span class="badge bg-info fs-5 mt-3">
                 ${data.current.condition.text}
               </span>
             </div>
@@ -249,7 +243,7 @@ function formatCurrentWeather(data){
 function getHourlyWeather(data) {
     for (i = 0; i < 24; i++) {
       var dateTimeDetails = convertStringToDateTime(data.forecast.forecastday[0].hour[i].time);
-      SECTION_HOURLY.innerHTML +=
+      DIV_HOURLY.innerHTML +=
       `
         <div class="card-body d-flex">
             <div class="w-100 d-flex">
@@ -265,8 +259,8 @@ function getHourlyWeather(data) {
                   <span class="text-center w-100 p-1 mt-3 badge bg-info fs-6 fw-bold">
                     ${data.forecast.forecastday[0].hour[i].condition.text}
                   </span>
-                  <span class="text-center w-100 mt-3 fs-3">
-                    ${data.forecast.forecastday[0].hour[i].temp_c}℃
+                  <span class="text-center w-100 mt-3 fs-4">
+                    ${data.forecast.forecastday[0].hour[i].temp_c} ℃ | ${data.forecast.forecastday[0].hour[i].temp_f} °F
                   </span>
                 </div>
               </div>
@@ -276,4 +270,40 @@ function getHourlyWeather(data) {
       `
     }
 }
+
+function resetElements(){
+  DIV_HOURLY.innerHTML = "";
+};
+
+function searchLocation(api, data){
+  BTN_SEARCH_LOCATION.addEventListener("click", () => {
+    resetElements();
+    if(isValidInputLocation()){
+      hideSection(false);
+      api = `https://api.weatherapi.com/v1/forecast.json?key=3f5f1e7f0c3f4ee4baa135432230210&q=${INPUT_LOCATION.value}`;
+      fetchWeatherAPIs(api, data);
+    }
+
+  });
+
+  INPUT_LOCATION.addEventListener('keypress',(e)=> {
+    resetElements();
+    if(e.key === "Enter"){
+      if(isValidInputLocation()){
+        hideSection(false);
+        api = `https://api.weatherapi.com/v1/forecast.json?key=3f5f1e7f0c3f4ee4baa135432230210&q=${INPUT_LOCATION.value}`;
+        fetchWeatherAPIs(api, data);
+      }
+    (e);
+    }
+  });
+
+  console.log(INPUT_LOCATION.value);
+  console.log(api);
+}
+
 //--===================== End of Functions =====================--
+
+//--===================== Start of Function Execution=====================--
+searchLocation();
+//--===================== End of Function Execution =====================--
