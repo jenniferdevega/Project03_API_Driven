@@ -27,10 +27,10 @@
 
   /* Classes */
   .weatherIcon{
-    height: 260px;
-    width: 260px;
-    left: 20%;
-    top: 33%;
+    height: 300px;
+    width: 300px;
+    left: 22%;
+    top: 25%;
     position: absolute;
     z-index: -1;
   }
@@ -51,5 +51,16 @@
 
   .divLeft{
     text-align: left;
+  }
+
+  .divHourlyForecast{
+    display: grid !important;
+    grid-template-columns: repeat(24, 25%);
+    overflow: auto;
+    white-space: nowrap;
+  }
+
+  .cardSize{
+    width: 95%;
   }
   /* --===================== End: Element Customization =====================--  */
