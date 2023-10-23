@@ -92,13 +92,13 @@ function getUserLocation(){
 }
 
 function convertStringToDateTime(strDateTime){
-  const dateTime = new Date(strDateTime);
+  const DATE_TIME = new Date(strDateTime);
   var strDay;
 
-  console.log(dateTime);
+  console.log(DATE_TIME);
 
   //Get Day of the Week
-  switch (dateTime.getDay()) {
+  switch (DATE_TIME.getDay()) {
     case 0:
       strDay = "Sunday";
       break;
@@ -122,8 +122,8 @@ function convertStringToDateTime(strDateTime){
   }
 
   //Get 12 hour format
-  var hours = dateTime.getHours();
-  var minutes = dateTime.getMinutes();
+  var hours = DATE_TIME.getHours();
+  var minutes = DATE_TIME.getMinutes();
   var AMPM = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
@@ -133,7 +133,7 @@ function convertStringToDateTime(strDateTime){
   //Return DateTime in array format
   var arrayDateTimeDetails = new Array(3);
   arrayDateTimeDetails[0] = strDay;
-  arrayDateTimeDetails[1] = dateTime.toDateString().slice(3,16);
+  arrayDateTimeDetails[1] = DATE_TIME.toDateString().slice(3,16);
   arrayDateTimeDetails[2] = strTime;
 
   console.log(arrayDateTimeDetails);
