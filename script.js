@@ -12,7 +12,6 @@ const API_KEY = "cdcaf7b8f51846e3af9234924232110";
 
 let longitude;
 let latitude;
-let inputLocation = document.querySelector("#inputLocation");
 let isBoolean = false;
 //--===================== End of Declaration =====================--
 
@@ -160,7 +159,7 @@ function formatCurrentWeather(data){
         <div class="card-body d-flex">
           <div class="w-100 mt-5 row d-flex">
 
-            <div class="col-2 pt-2 pb-2 divRight">
+            <div class="col-2">
                <img class="weatherIcon" src="${data.current.condition.icon}" alt="weather icon">
             </div>
 
@@ -298,8 +297,8 @@ function searchLocation(api, data){
     }
   });
 
-  console.log(INPUT_LOCATION.value);
-  console.log(api);
+  console.log(`Input Value: ${INPUT_LOCATION.value}`);
+  console.log(`API value: ${api}`);
 }
 
 //--===================== End of Functions =====================--
