@@ -27,12 +27,22 @@
 
   /* Classes */
   .weatherIcon{
-    height: 260px;  
-    width: 260px; 
+    height: 260px;
+    width: 260px;
     left: 20%;
-    top: 30%; 
+    top: 30%;
     position: absolute;
     z-index: -1;
+  }
+
+  .imgSunrise{
+    height: 120px;
+    width: 130px;
+  }
+
+  .imgSunset{
+    height: 130px;
+    width: 150px;
   }
 
   .divRight{
