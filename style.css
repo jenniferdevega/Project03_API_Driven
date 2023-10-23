@@ -20,4 +20,26 @@
     position: relative;
   }
 
+  a{
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Classes */
+  .weatherIcon{
+    height: 260px;  
+    width: 260px; 
+    left: 20%;
+    top: 30%; 
+    position: absolute;
+    z-index: -1;
+  }
+
+  .divRight{
+    text-align: right;
+  }
+
+  .divLeft{
+    text-align: left;
+  }
   /* --===================== End: Element Customization =====================--  */
