@@ -157,12 +157,12 @@ function fetchWeatherAPIs(APICurrentWeather){
 function formatCurrentWeather(data){
   var dateTimeDetails = convertStringToDateTime(data.location.localtime);
 
-   var right = `
+   var child = `
         <div class="card-body">
           <div class="w-100 mt-5 row">
 
             <div class="col-2 pt-2 pb-2 divRight">
-               <img class="position-absolute weatherIcon" src="${data.current.condition.icon}" alt="weather icon">
+               <img class="weatherIcon" src="${data.current.condition.icon}" alt="weather icon">
             </div>
 
             <div class="col-2 pt-2 pb-2 text-center fs-5">
@@ -200,7 +200,7 @@ function formatCurrentWeather(data){
                 </br>
               </span>
 
-              <span class="badge bg-warning">
+              <span class="badge bg-info">
                 ${data.current.condition.text}
               </span>
             </div>
@@ -208,57 +208,35 @@ function formatCurrentWeather(data){
           </div>
         </div>
 
+      <div class="card-body pt-5">
+        <div class="w-100 mt-5 row">
 
-        <div class="card shadow mt-5 w-100">
-          <div class="card-body">
-          <div class="row">
-
-            <div class="col-2 pt-2 pb-2 text-center">
-            </div>
-
-            <div class="col-2 pt-2 pb-2 text-center">
- 
-            </div>
-
-            <div class="col-2 pt-2 pb-2=">
-
-            </div>
-
-            <div class="col-2 pt-2 pb-2 text-center">
-            </div>
-
-            <div class="col-2 pt-2 pb-2 text-center">
-            
-            </div>
-
-            <div class="col-2 pt-2 pb-2 text-center">
-            </div>
-          
+          <div class="col-4 pt-2 pb-2 divLeft">
           </div>
-        </div>
-        </div>
-      `
-  var left =  `
-    <div class="col-sm-6 mt-4">
-      <div class="col-4 mt-3 w-100">
-        <div class="text-center rounded-pill d-flex justify-content-center p-2">
-          <span class="time fst-italic m-0 ps-2">
-            Sunrise ${data.forecast.forecastday[0].astro.sunrise}
-          </span>
-        </div>
-        <div class="text-center rounded-pill d-flex justify-content-center p-2 mt-3">
-          <span class="time fst-italic ps-2  m-0">
-            Sunset ${data.forecast.forecastday[0].astro.sunset}
-          </span>
+
+          <div class="col-2 pt-2 pb-2 text-center fs-5">
+            <img src="images/sunrise.gif" alt="sunrise icon" class="imgSunrise">
+            <span class="badge bg-warning">
+              Sunrise ${data.forecast.forecastday[0].astro.sunrise}
+            </span>
+          </div>
+
+          <div class="col-2 pt-2 pb-2 text-center fs-5">
+          <img src="images/sunset.gif" alt="sunset icon" class="imgSunset">
+            <span class="badge bg-dark">
+              Sunset ${data.forecast.forecastday[0].astro.sunset}
+            </span>
+          </div>
+          
+          <div class="col-4 pt-2 pb-2">
+          </div>
+
+
+
         </div>
       </div>
-    </div>
-  `
-
- 
-  // append children to parent main
-  ELEMENT_MAIN.innerHTML += right;
-  ELEMENT_MAIN.innerHTML += left;
-
+      `
+  // Append to parent
+  ELEMENT_MAIN.innerHTML += child;
 };
 //--===================== End of Functions =====================--
