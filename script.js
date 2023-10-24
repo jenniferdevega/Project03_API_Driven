@@ -3,10 +3,10 @@
 //Note: DO NOT USE d-flex in section since section.style.display = 'none'; will not work
 const SECTION_HOURLY = document.querySelector("#sectionHourly");
 const DIV_HOURLY = document.querySelector("#divHourlyForecast");
-let ELEMENT_MAIN = document.querySelector("#main");
-let INPUT_LOCATION = document.querySelector("#inputLocation");
-let BTN_SEARCH_LOCATION = document.querySelector("#btnSearchLocation");
-let HEADER = document.querySelector("#header");
+const ELEMENT_MAIN = document.querySelector("#main");
+const INPUT_LOCATION = document.querySelector("#inputLocation");
+const BTN_SEARCH_LOCATION = document.querySelector("#btnSearchLocation");
+const HEADER = document.querySelector("#header");
 
 const API_KEY = "cdcaf7b8f51846e3af9234924232110";
 
